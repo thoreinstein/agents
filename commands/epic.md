@@ -63,3 +63,4 @@ After completing the analysis and proposing stories:
 - [ ] Stories created in work tracking system as children of $ARGUMENTS
 
 **DO NOT IMPLEMENT ANY CODE**
+**DO NOT CALL submit_plan** — this is a discussion, not a plan-and-implement cycle.
