@@ -51,9 +51,11 @@ Analyze the epic through these lenses to identify gaps:
 After completing the analysis and proposing stories:
 
 1. Present the gap analysis and proposed stories for review
-2. Once confirmed, create the stories using `bd`:
-   - **Child stories MUST use:** `bd add "<story title>" --parent=$ARGUMENTS`
-   - **Blockers MUST use:** `bd dep add <story-id> <blocked-by-id>`
+2. Once confirmed, create the stories as children of $ARGUMENTS using the project's work tracking tool
+
+**For projects using beads:**
+- **Child stories MUST use:** `bd add "<story title>" --parent=$ARGUMENTS`
+- **Blockers MUST use:** `bd dep add <story-id> <blocked-by-id>`
 
 ---
 

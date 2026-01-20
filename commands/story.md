@@ -49,9 +49,11 @@ Analyze the story through these lenses to identify implementation gaps:
 After completing the analysis and proposing tasks:
 
 1. Present the implementation gaps and proposed tasks for review
-2. Once confirmed, create the tasks using `bd`:
-   - **Child tasks MUST use:** `bd add "<task title>" --parent=$ARGUMENTS`
-   - **Blockers MUST use:** `bd dep add <task-id> <blocked-by-id>`
+2. Once confirmed, create the tasks as children of $ARGUMENTS using the project's work tracking tool
+
+**For projects using beads:**
+- **Child tasks MUST use:** `bd add "<task title>" --parent=$ARGUMENTS`
+- **Blockers MUST use:** `bd dep add <task-id> <blocked-by-id>`
 
 ---
 
