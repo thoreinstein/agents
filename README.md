@@ -55,6 +55,46 @@ Skills are agent-agnostic and can be used with any AI assistant that supports th
 |-------|-------------|
 | [content-writer](skills/content-writer/) | Research-driven content writing with citations, iterative outlines, and real-time feedback |
 
+### Web Quality
+
+| Skill | Description |
+|-------|-------------|
+| [accessibility](skills/accessibility/) | Audit and improve web accessibility following WCAG 2.1 guidelines |
+| [best-practices](skills/best-practices/) | Modern web development best practices for security, compatibility, and code quality |
+| [core-web-vitals](skills/core-web-vitals/) | Optimize Core Web Vitals (LCP, INP, CLS) for better page experience |
+| [performance](skills/performance/) | Web performance optimization for faster loading and better user experience |
+| [seo](skills/seo/) | Search engine optimization for visibility and ranking |
+| [web-quality-audit](skills/web-quality-audit/) | Comprehensive web quality audit covering performance, accessibility, SEO, and best practices |
+
+**Usage examples:**
+
+```
+Audit this page for web quality issues
+```
+
+```
+Optimize performance and fix Core Web Vitals
+```
+
+```
+Review accessibility and suggest improvements
+```
+
+```
+Make this SEO-ready
+```
+
+**Trigger phrases by skill:**
+
+| Skill | Trigger phrases |
+|-------|-----------------|
+| web-quality-audit | "audit my site", "quality review", "lighthouse audit", "check web quality" |
+| performance | "speed up", "optimize performance", "reduce load time", "fix slow" |
+| core-web-vitals | "Core Web Vitals", "LCP", "INP", "CLS", "page experience" |
+| accessibility | "accessibility", "a11y", "WCAG", "screen reader", "keyboard navigation" |
+| seo | "SEO", "search optimization", "meta tags", "structured data", "sitemap" |
+| best-practices | "best practices", "security audit", "modern standards", "code quality" |
+
 ## Skill Structure
 
 Each skill follows the Agent Skills Specification structure:
@@ -112,6 +152,11 @@ Contributions are welcome! When adding or modifying skills:
 3. Use the `references/` directory for lengthy supporting materials
 4. Keep SKILL.md under 200 lines when possible
 5. Test with at least one compatible agent
+
+## Acknowledgments
+
+Special thanks to [Addy Osmani](https://github.com/addyosmani) for the Web Quality skills (accessibility, best-practices, core-web-vitals, performance, seo, web-quality-audit).
+
 
 ## License
 
