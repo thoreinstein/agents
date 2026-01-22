@@ -16,12 +16,28 @@ allowed-tools:
   - TodoRead
 metadata:
   author: thoreinstein
-  version: 1.0.0
+  version: 1.1.0
 ---
 
 # Implement
 
 Execute complete feature implementations using a structured, phased approach with verification gates and atomic commits.
+
+## HARD CONSTRAINTS (NON-NEGOTIABLE)
+
+- **SCOPE IS LOCKED** — Only implement what is in the plan from `/analyze`. Nothing more.
+- **NO SCOPE CREEP** — Do not implement work from other tickets, even if it seems related or helpful.
+- **TICKET TRACKING IS MANDATORY** — Update ticket status (in-progress/done) as you work.
+- **EPIC CLOSURE RULES** — Never close an epic while child tickets remain open.
+
+### Scope Creep Self-Check
+
+Before writing ANY code, ask:
+1. Is this in the implementation plan? → NO = don't implement
+2. Is this ticket in scope for this phase? → NO = don't implement
+3. Am I adding something "nice to have"? → YES = note as follow-up, don't implement
+
+If you discover related work, add it to "Discovered Follow-Up Items" and continue with scoped work.
 
 ## When to Use
 
@@ -29,6 +45,30 @@ Execute complete feature implementations using a structured, phased approach wit
 - Complex multi-component implementations
 - Features requiring coordination across backend, frontend, and infrastructure
 - Any implementation benefiting from structured phases and checkpoints
+
+## Ticket Status Management (Beads Projects)
+
+```bash
+# Starting work on a ticket
+bd update <ticket-id> --status in-progress
+
+# Completing a ticket
+bd update <ticket-id> --status done
+
+# Verify epic children before closing
+bd show <epic-id> --json  # All children must be status:done
+```
+
+### Status Update Rules
+
+| Event | Action |
+| ----- | ------ |
+| Starting implementation | Mark parent ticket in-progress |
+| Starting a child ticket in a phase | Mark child in-progress |
+| Completing a child ticket | Mark child done |
+| ALL children done → close epic | Mark epic done |
+
+**NEVER close an epic while children are still open.**
 
 ## Phase Execution Loop
 
@@ -40,21 +80,25 @@ Every phase follows this exact sequence:
 ├─────────────────────────────────────────────────────────────┤
 │                                                             │
 │   1. PLAN     → Define work for this phase                  │
-│                 Mark phase as in_progress in task tracking  │
+│                 Mark phase tickets as in_progress           │
 │                                                             │
 │   2. WORK     → Execute the phase work                      │
-│                 Delegate to appropriate specialists         │
+│                 ⚠️  ONLY work in the plan — no extras        │
 │                                                             │
 │   3. VERIFY   → Run verification checklist                  │
 │                 Tests pass, lints clean, build succeeds     │
 │                                                             │
 │   4. COMMIT   → Create atomic commit for phase              │
-│                 Mark phase as completed in task tracking    │
+│                 Include ticket IDs in commit message        │
 │                                                             │
-│   5. PROCEED  → Only after commit succeeds                  │
+│   5. UPDATE   → Mark completed tickets as done              │
+│                 bd update <ticket-id> --status done         │
+│                                                             │
+│   6. PROCEED  → Only after commit + ticket updates          │
 │                 Move to next phase                          │
 │                                                             │
-│   ⚠️  DO NOT PROCEED TO NEXT PHASE UNTIL COMMIT SUCCEEDS    │
+│   ⚠️  DO NOT PROCEED UNTIL COMMIT SUCCEEDS AND TICKETS      │
+│       ARE UPDATED                                           │
 │                                                             │
 └─────────────────────────────────────────────────────────────┘
 ```
@@ -88,9 +132,10 @@ Phase 2: Architecture Decision (if needed)
   - [ ] Commit architecture docs
 
 Phase 3: Implementation
-  - [ ] [Specific implementation tasks]
+  - [ ] [Specific implementation tasks from plan]
   - [ ] Write tests
   - [ ] Commit implementation
+  - [ ] Update ticket status → done
 
 Phase 4: Integration
   - [ ] Integrate components
@@ -103,6 +148,8 @@ Phase 5: Verification
 Phase 6: Documentation & Cleanup
   - [ ] Update documentation
   - [ ] Create implementation summary
+  - [ ] Document follow-up items
+  - [ ] Verify all tickets closed
   - [ ] Final commit
 ```
 
@@ -122,13 +169,32 @@ Phase 6: Documentation & Cleanup
 └─────────────────────────────────────────────────────────────┘
 ```
 
+## Epic Completion Gate
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│  EPIC COMPLETION GATE                                       │
+├─────────────────────────────────────────────────────────────┤
+│  [ ] ALL child tickets are status: done                     │
+│  [ ] All phases in the plan are complete                    │
+│  [ ] All commits are pushed (if applicable)                 │
+│  [ ] No uncommitted changes remain                          │
+│  [ ] Implementation summary documented                      │
+│  [ ] Follow-up items captured                               │
+│                                                             │
+│  ⚠️  DO NOT CLOSE EPIC IF ANY CHILD IS STILL OPEN           │
+└─────────────────────────────────────────────────────────────┘
+```
+
 ## Constraints
 
+- **Scope is the plan**: Only implement what `/analyze` planned
 - **Atomic commits per phase**: Each phase MUST end with a commit
 - **No skipping phases**: Follow the sequence even for small features
 - **Verification gates**: Do not proceed until verification passes
-- **Track everything**: All phases defined upfront in task tracking
-- **Clean completion**: No uncommitted changes, all tasks resolved
+- **Track everything**: Update ticket status in real-time, not at the end
+- **Clean completion**: No uncommitted changes, all tickets closed
+- **No premature closure**: Epic stays open until all children are done
 
 ## Implementation Output
 
@@ -139,6 +205,11 @@ At completion, document the implementation:
 
 ### What Was Built
 [Brief description of the feature]
+
+### Tickets Completed
+| Ticket | Title | Status |
+| ------ | ----- | ------ |
+| ... | ... | done |
 
 ### Files Changed
 - `path/to/file` — [what changed]
@@ -161,6 +232,11 @@ At completion, document the implementation:
 ### Known Limitations
 [Any constraints or future work]
 
+### Discovered Follow-Up Items
+| Item | Related Ticket | Why Not In Scope |
+| ---- | -------------- | ---------------- |
+| ... | ... | Not in plan |
+
 ### Next Steps
 [Follow-up tasks if any]
 ```
@@ -170,47 +246,56 @@ See `references/templates/implementation-summary.md` for the full template.
 ## Example
 
 ```
-Feature: Add user notification preferences
+Feature: Add user notification preferences (EPIC-123)
+
+Child Tickets: STORY-124, STORY-125, STORY-126
 
 Phase 1: Requirements Analysis
-  ✓ Explored existing notification code
-  ✓ Found user preferences patterns
-  ✓ Clarified: email, push, in-app toggles needed
+  ✓ Loaded plan from working/plans/EPIC-123-plan.md
+  ✓ Marked EPIC-123 as in-progress
   ✓ Committed: docs/specs/notification-prefs.md
 
 Phase 2: Architecture Decision
-  ✓ Evaluated: column per pref vs JSON blob vs separate table
-  ✓ Decision: separate preferences table (flexibility)
+  ✓ Decision: separate preferences table
   ✓ Committed: docs/adr/007-notification-preferences.md
 
 Phase 3: Implementation
-  Backend:
+  STORY-124 (backend):
+    ✓ Marked STORY-124 in-progress
     ✓ Created preferences table migration
     ✓ Added PreferencesService
-    ✓ Added API endpoints
-  Frontend:
+    ✓ Committed: feat(STORY-124): add notification preferences backend
+    ✓ Marked STORY-124 done
+
+  STORY-125 (frontend):
+    ✓ Marked STORY-125 in-progress
     ✓ Added preferences UI component
-    ✓ Integrated with settings page
-  ✓ Committed: feat: add notification preferences
+    ✓ Committed: feat(STORY-125): add notification preferences UI
+    ✓ Marked STORY-125 done
 
 Phase 4: Integration
-  ✓ Connected UI to API
-  ✓ Added e2e tests
-  ✓ Committed: chore: integrate notification preferences
+  STORY-126:
+    ✓ Marked STORY-126 in-progress
+    ✓ Connected UI to API
+    ✓ Added e2e tests
+    ✓ Committed: chore(STORY-126): integrate notification preferences
+    ✓ Marked STORY-126 done
 
 Phase 5: Verification
   ✓ All tests pass (47/47)
   ✓ Lint clean
   ✓ Build succeeds
-  ✓ Committed: fix: address lint warnings
 
 Phase 6: Documentation & Cleanup
   ✓ Updated API docs
   ✓ Created implementation summary
-  ✓ All tasks completed
+  ✓ Verified all children done: STORY-124 ✓, STORY-125 ✓, STORY-126 ✓
+  ✓ Marked EPIC-123 done
   ✓ Committed: docs: notification preferences
 
 Implementation complete!
 ```
 
-Begin by gathering context about the feature to implement and setting up task tracking with all phases defined.
+Begin by loading the implementation plan and marking the ticket as in-progress.
+
+**Remember: The plan is the scope. Do not exceed it.**

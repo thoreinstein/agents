@@ -5,19 +5,52 @@ argument-hint: "<ticket-id> - e.g., PROJ-123, bd-42, #123"
 
 # Implementation Plan Analysis: $ARGUMENTS
 
-## Prerequisites
+## HARD CONSTRAINTS (NON-NEGOTIABLE)
 
-Fetch the ticket details in full (JSON preferred) before proceeding.
+- **NO CODE WRITING** — Do not write, edit, or modify any code. This is analysis only.
+- **NO IMPLEMENTATION** — Do not implement features, fix bugs, or make changes.
+- **DO NOT CALL submit_plan** — Save the plan to Obsidian, do not trigger interactive plan review.
+- **ANALYSIS OUTPUT ONLY** — Your deliverable is a written plan, nothing else.
+
+If you find yourself wanting to write code, STOP. Your job is to produce a plan for `/implement` to execute.
 
 ---
 
-## Step 1: Ticket Classification
+## Prerequisites
 
-After fetching the ticket:
+Fetch the ticket details in full (JSON preferred) before proceeding:
+- For beads: `bd show $ARGUMENTS --json`
 
-1. Check if it's an **Epic** (type is epic, or has child tickets/dependents)
-2. **If Epic:** Fetch all child tickets — these are the scope
-3. **If Single Ticket:** This ticket alone is the scope
+---
+
+## Step 1: Scope Check (GATE)
+
+After fetching the ticket, determine its type and scope:
+
+1. **Check if Epic:** Does it have child tickets/stories?
+2. **Count children:** How many child tickets exist?
+
+### Scope Guard
+
+| Condition | Action |
+| --------- | ------ |
+| **Single ticket (story/task)** | Proceed with analysis |
+| **Epic with 1-3 children** | Proceed — manageable scope |
+| **Epic with 4+ children** | **STOP** — Scope too large |
+
+**If scope is too large:**
+```
+⚠️ SCOPE TOO LARGE
+
+This epic has [N] child tickets. Analyzing all of them will produce an unwieldy plan.
+
+Recommendation: Run `/analyze` on individual stories instead:
+- [list child ticket IDs]
+
+Would you like to proceed with a specific story, or continue with the full epic analysis anyway?
+```
+
+Wait for user confirmation before proceeding with large epics.
 
 ---
 
@@ -123,11 +156,16 @@ If implementation analysis reveals missing prerequisites or undefined work:
 
 ---
 
-## Step 5: Save Plan
+## Step 5: Save Plan (MANDATORY)
 
 Save the implementation plan to Obsidian:
 
 - **Path:** `working/plans/$ARGUMENTS-plan.md`
+
+This save is **required**. If the Obsidian write fails:
+1. Report the error to the user
+2. Output the full plan in the chat as a fallback
+3. Ask the user to manually save or retry
 
 ---
 
@@ -135,6 +173,7 @@ Save the implementation plan to Obsidian:
 
 Before finalizing the plan:
 
+- [ ] Scope check passed (or user approved large epic)
 - [ ] All tickets in scope are accounted for
 - [ ] Dependencies are correctly mapped
 - [ ] Parallelization opportunities identified
@@ -142,7 +181,8 @@ Before finalizing the plan:
 - [ ] Verification criteria defined for each ticket
 - [ ] Risks identified with mitigations
 - [ ] Gaps flagged (if any)
-- [ ] Plan saved to Obsidian
+- [ ] Plan saved to `working/plans/$ARGUMENTS-plan.md`
+- [ ] **No code was written during this process**
 
 ---
 
@@ -150,7 +190,6 @@ Before finalizing the plan:
 
 Now analyze ticket: **$ARGUMENTS**
 
-Start with Step 1: Fetch the ticket details.
+Start with Step 1: Fetch the ticket and perform scope check.
 
-**DO NOT IMPLEMENT ANY CODE**
-**DO NOT CALL submit_plan** — this is analysis only. Save the plan to Obsidian, do not trigger interactive plan review.
+**DO NOT IMPLEMENT ANY CODE** — Your output is a plan document, not working software.

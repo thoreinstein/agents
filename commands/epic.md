@@ -4,67 +4,99 @@ description: Refine an epic into high-level stories through cross-functional ana
 
 # Epic Refinement: $ARGUMENTS
 
+## HARD CONSTRAINTS (NON-NEGOTIABLE)
+
+- **NO CODE READING** — Do not read, analyze, or reference source code. This is a requirements refinement exercise.
+- **NO SOLUTIONING** — Do not propose technical implementations, architecture decisions, or design patterns.
+- **NO IMPLEMENTATION DETAILS** — Stories must describe WHAT, never HOW.
+- **DO NOT CALL submit_plan** — This is a discussion, not a plan-and-implement cycle.
+
+If you find yourself wanting to look at code, STOP. Return to the epic description and acceptance criteria.
+
+---
+
 ## Prerequisites
 
-Fetch the epic details in full (JSON preferred) before proceeding.
+Fetch the epic details in full (JSON preferred) before proceeding:
+- For beads: `bd show $ARGUMENTS --json`
 
 ---
 
-## 1. Cross-Functional Analysis
+## 1. Epic Description & AC Refinement
 
-Analyze the epic through these lenses to identify gaps:
+Before creating child stories, ensure the epic itself is well-defined:
 
-| Lens          | Key Questions                                                             |
-| ------------- | ------------------------------------------------------------------------- |
-| **Product**       | Are user value and scope boundaries clear? What user stories are missing? |
-| **Architecture**  | Are system integration points, data flow, and contracts defined?          |
-| **Quality/Risk**  | What are the failure modes? Is the acceptance criteria testable?          |
-| **Data**          | Does this require schema changes, migrations, or new data models?         |
-| **Observability** | What metrics, logs, and alerts are needed?                                |
-| **Security**      | What auth, access control, or compliance requirements exist?              |
-| **Performance**   | Are there latency, throughput, or scalability considerations?             |
-| **ML/AI**         | Does this involve model training, inference, or data pipelines?           |
+| Check                   | Question                                                             |
+| ----------------------- | -------------------------------------------------------------------- |
+| **Clear Problem Statement** | Does the description explain the user/business problem being solved? |
+| **Scope Boundaries**        | Is it clear what is IN and OUT of scope?                             |
+| **User Value**              | Is the value proposition explicit?                                   |
+| **Testable AC**             | Can each acceptance criterion be verified without ambiguity?         |
+| **Dependencies**            | Are external dependencies or prerequisites noted?                    |
 
-**Constraint:** DO NOT solution or implement code. Focus only on defining **what** needs to be built.
+**Output:** List any gaps or ambiguities in the epic that need clarification before proceeding.
 
 ---
 
-## 2. Output Format
+## 2. Cross-Functional Gap Analysis
 
-### Part 1: Gap Analysis Report
+Analyze the epic through these lenses to identify what's missing from requirements (NOT solutions):
 
-* **Product Gaps:** [List findings]
-* **Technical Gaps:** [List findings]
-* **Data Implications:** [List findings]
-* **Risk Factors:** [List findings]
+| Lens          | Key Questions                                                            |
+| ------------- | ------------------------------------------------------------------------ |
+| **Product**       | Are user personas and their goals clear? What user journeys are implied? |
+| **Data**          | What data inputs/outputs are implied? Any data ownership questions?      |
+| **Quality/Risk**  | What could go wrong? What edge cases need consideration?                 |
+| **Security**      | What access control or compliance requirements exist?                    |
+| **Observability** | What does "success" look like? How will we know it's working?            |
 
-### Part 2: Proposed Child Stories
-
-| Story Title | User/Tech Goal           | Acceptance Criteria Summary |
-| ----------- | ------------------------ | --------------------------- |
-| [Title]     | [Who needs this and why] | [High level AC]             |
+**Output:** Gap Analysis Report
+- **Clarifications Needed:** [Questions for product/stakeholders]
+- **Missing Requirements:** [Gaps in the epic definition]
+- **Risk Factors:** [Unknowns that could affect scope]
 
 ---
 
-## 3. Story Creation
+## 3. Propose Child Stories
 
-After completing the analysis and proposing stories:
+Break the epic into discrete, deliverable stories. Each story should be:
+- **User-focused** — Describes value, not implementation
+- **Independently deliverable** — Can be completed and verified on its own
+- **Small enough** — Can be refined further in `/story`
 
-1. Present the gap analysis and proposed stories for review
-2. Once confirmed, create the stories as children of $ARGUMENTS using the project's work tracking tool
+| Story Title | User/Business Goal     | High-Level AC        |
+| ----------- | ---------------------- | -------------------- |
+| [Title]     | [Who benefits and why] | [Verifiable outcome] |
+
+---
+
+## 4. Review & Create Stories
+
+1. **Present for confirmation** — Show the gap analysis and proposed stories to the user
+2. **Wait for explicit approval** — Do not create stories until user confirms
+3. **Create child stories** in the project's work tracking system
 
 **For projects using beads:**
-- **Child stories MUST use:** `bd add "<story title>" --parent=$ARGUMENTS`
-- **Blockers MUST use:** `bd dep add <story-id> <blocked-by-id>`
+```bash
+bd add "<story title>" --parent=$ARGUMENTS
+```
+**MANDATORY for beads projects:** Every child story MUST include `--parent=$ARGUMENTS` to establish the hierarchy.
+
+If stories have dependencies on each other:
+```bash
+bd dep add <story-id> <blocked-by-id>
+```
+
+**For projects using other tracking systems (GitHub Issues, Jira, etc.):**
+- Create stories as children/sub-issues of the parent epic
+- Ensure parent-child relationship is established per that system's conventions
 
 ---
 
 ## Acceptance Criteria
 
-- [ ] Epic analyzed through all relevant lenses
-- [ ] Gap analysis report complete
-- [ ] High-level stories identified (no implementation details)
-- [ ] Stories created in work tracking system as children of $ARGUMENTS
-
-**DO NOT IMPLEMENT ANY CODE**
-**DO NOT CALL submit_plan** — this is a discussion, not a plan-and-implement cycle.
+- [ ] Epic description and AC reviewed for clarity and completeness
+- [ ] Gap analysis identifies missing requirements (not solutions)
+- [ ] Child stories are user-focused stubs (no implementation details)
+- [ ] All stories created with proper parent linkage (beads: `--parent=$ARGUMENTS`)
+- [ ] No code was read or referenced during this process

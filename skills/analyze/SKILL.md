@@ -13,12 +13,21 @@ allowed-tools:
   - Bash(git:show)
 metadata:
   author: thoreinstein
-  version: 1.0.0
+  version: 1.1.0
 ---
 
 # Deep Analysis Mode
 
 Perform a comprehensive analysis using multi-phase investigation and structured synthesis.
+
+## HARD CONSTRAINTS (NON-NEGOTIABLE)
+
+- **READ-ONLY MODE** — This skill is for analysis, not implementation
+- **NO CODE WRITING** — Do not write, edit, or modify any source code
+- **NO IMPLEMENTATION** — Do not implement features, fix bugs, or make changes
+- **OUTPUT IS DOCUMENTATION** — Your deliverable is analysis/plan documents only
+
+If you find yourself wanting to write code, STOP. Analysis produces documents, not software.
 
 ## When to Use This Skill
 
@@ -27,6 +36,7 @@ Perform a comprehensive analysis using multi-phase investigation and structured 
 - During security or performance audits
 - When making build-vs-buy or technology decisions
 - To produce a documented assessment for stakeholder review
+- **As the `/analyze` command** to produce implementation plans for `/implement`
 
 ## Workflow
 
@@ -92,8 +102,15 @@ The report should include:
 | **Maintainability** | Readability, coupling, documentation    |
 | **Testability**     | Coverage, mocking, isolation            |
 
+## Output Requirements
+
+When used via `/analyze` command:
+- **Save plan to:** `working/plans/<ticket-id>-plan.md` in Obsidian vault
+- If Obsidian write fails, output full plan in chat and report error
+
 ## Constraints
 
+- **Read-only** — analyze code, do not modify it
 - **Be thorough but focused** - analyze deeply but stay scoped to the target area
 - **Prioritize findings** - not all issues are equal; use P0/P1/P2 consistently
 - **Support claims with evidence** - reference specific files, lines, or patterns
@@ -102,3 +119,5 @@ The report should include:
 ---
 
 Begin by performing reconnaissance on the target area before conducting domain analysis.
+
+**Remember: Your output is documentation. Do not write code.**
