@@ -29,6 +29,7 @@ Execute complete feature implementations using a structured, phased approach wit
 - **NO SCOPE CREEP** — Do not implement work from other tickets, even if it seems related or helpful.
 - **TICKET TRACKING IS MANDATORY** — Update ticket status (in-progress/done) as you work.
 - **EPIC CLOSURE RULES** — Never close an epic while child tickets remain open.
+- **COMMIT BEFORE CLOSE** — A ticket status can only be changed to 'done' AFTER the code changes for that ticket have been successfully committed.
 
 ### Scope Creep Self-Check
 
@@ -99,6 +100,9 @@ Every phase follows this exact sequence:
 │                                                             │
 │   ⚠️  DO NOT PROCEED UNTIL COMMIT SUCCEEDS AND TICKETS      │
 │       ARE UPDATED                                           │
+│                                                             │
+│   ⚠️  NEVER mark a ticket done until its changes are        │
+│       committed.                                            │
 │                                                             │
 └─────────────────────────────────────────────────────────────┘
 ```
@@ -180,8 +184,10 @@ Phase 6: Documentation & Cleanup
 │  [ ] All commits are pushed (if applicable)                 │
 │  [ ] No uncommitted changes remain                          │
 │  [ ] Implementation summary documented                      │
+│  [ ] Final commit completed (if needed)                     │
 │  [ ] Follow-up items captured                               │
 │                                                             │
+│  ⚠️  COMMIT ALL CHANGES BEFORE CLOSING EPIC                 │
 │  ⚠️  DO NOT CLOSE EPIC IF ANY CHILD IS STILL OPEN           │
 └─────────────────────────────────────────────────────────────┘
 ```
@@ -290,8 +296,8 @@ Phase 6: Documentation & Cleanup
   ✓ Updated API docs
   ✓ Created implementation summary
   ✓ Verified all children done: STORY-124 ✓, STORY-125 ✓, STORY-126 ✓
-  ✓ Marked EPIC-123 done
   ✓ Committed: docs: notification preferences
+  ✓ Marked EPIC-123 done
 
 Implementation complete!
 ```

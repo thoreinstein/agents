@@ -11,6 +11,7 @@ argument-hint: "<ticket-id> - must have a plan from /analyze"
 - **NO SCOPE CREEP** — If you think "the user probably also wants X", STOP. If X is not in the plan, do not implement it.
 - **TICKET TRACKING IS MANDATORY** — Every ticket worked must be updated (in-progress → complete).
 - **EPIC CLOSURE RULES** — An epic is NOT complete until ALL child tickets are closed.
+- **COMMIT BEFORE CLOSE** — A ticket status can only be changed to 'done' AFTER the code changes for that ticket have been successfully committed.
 
 If you discover related work that should be done:
 1. Note it as a follow-up item
@@ -104,6 +105,8 @@ Execute each phase from the implementation plan following this exact sequence:
 Plan → Work → Verify → Commit → Update Tickets → Proceed
 ```
 
+⚠️ NEVER mark a ticket done until its changes are committed.
+
 ### For Each Phase:
 
 #### 1. Plan
@@ -179,7 +182,9 @@ Before marking an epic as complete:
 │  [ ] All commits are pushed (if applicable)                 │
 │  [ ] No uncommitted changes remain                          │
 │  [ ] Implementation summary documented                      │
+│  [ ] Final commit completed (if needed)                     │
 │                                                             │
+│  ⚠️  COMMIT ALL CHANGES BEFORE CLOSING EPIC                 │
 │  ⚠️  DO NOT CLOSE EPIC IF ANY CHILD IS STILL OPEN           │
 └─────────────────────────────────────────────────────────────┘
 ```
@@ -196,9 +201,10 @@ bd show $ARGUMENTS --json  # Check children array, all should be status:done
 After the last phase:
 
 1. Verify all child tickets are marked complete
-2. Confirm no uncommitted changes remain
-3. **Only then** mark the epic/parent ticket as complete
-4. Document any follow-up items discovered during implementation
+2. Confirm no uncommitted changes remain (including implementation summary)
+3. **Perform final commit** if any changes were made during cleanup
+4. **Only then** mark the epic/parent ticket as complete
+5. Document any follow-up items discovered during implementation
 
 ---
 
