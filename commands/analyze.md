@@ -11,6 +11,7 @@ argument-hint: "<ticket-id> - e.g., PROJ-123, bd-42, #123"
 - **NO IMPLEMENTATION** — Do not implement features, fix bugs, or make changes.
 - **DO NOT CALL submit_plan** — Save the plan to Obsidian, do not trigger interactive plan review.
 - **ANALYSIS OUTPUT ONLY** — Your deliverable is a written plan, nothing else.
+- **USE OBSIDIAN FOR PLANS** — Plans MUST be saved using the Obsidian MCP tools (`obsidian_obsidian_append_content`). Do NOT use `write` or `edit` tools to save plans to the local filesystem.
 
 If you find yourself wanting to write code, STOP. Your job is to produce a plan for `/implement` to execute.
 
@@ -158,11 +159,21 @@ If implementation analysis reveals missing prerequisites or undefined work:
 
 ## Step 5: Save Plan (MANDATORY)
 
-Save the implementation plan to Obsidian:
+Save the implementation plan to Obsidian using the Obsidian MCP tools.
 
-- **Path:** `working/plans/$ARGUMENTS-plan.md`
+**Required tool:** `obsidian_obsidian_append_content`
+**Path:** `working/plans/$ARGUMENTS-plan.md`
 
-This save is **required**. If the Obsidian write fails:
+```
+obsidian_obsidian_append_content(
+  filepath: "working/plans/$ARGUMENTS-plan.md",
+  content: <full plan content>
+)
+```
+
+⚠️ **DO NOT use `write` or `edit` tools** — these write to the local filesystem, not Obsidian.
+
+If the Obsidian write fails:
 1. Report the error to the user
 2. Output the full plan in the chat as a fallback
 3. Ask the user to manually save or retry
@@ -181,7 +192,7 @@ Before finalizing the plan:
 - [ ] Verification criteria defined for each ticket
 - [ ] Risks identified with mitigations
 - [ ] Gaps flagged (if any)
-- [ ] Plan saved to `working/plans/$ARGUMENTS-plan.md`
+- [ ] Plan saved to Obsidian via `obsidian_obsidian_append_content` (NOT local filesystem)
 - [ ] **No code was written during this process**
 
 ---

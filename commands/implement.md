@@ -12,6 +12,10 @@ argument-hint: "<ticket-id> - must have a plan from /analyze"
 - **TICKET TRACKING IS MANDATORY** — Every ticket worked must be updated (in-progress → complete).
 - **EPIC CLOSURE RULES** — An epic is NOT complete until ALL child tickets are closed.
 - **COMMIT BEFORE CLOSE** — A ticket status can only be changed to 'done' AFTER the code changes for that ticket have been successfully committed.
+- **VERIFY BEFORE COMMIT** — No code shall be committed until all verification steps (tests, lint, build, etc.) have passed successfully. If any check fails, you MUST resolve the issues and re-verify before attempting to commit.
+- **NO --NO-VERIFY** — Never, under any circumstances, use the `--no-verify` flag with git commit. Pre-commit hooks must always run and pass. If they fail, fix the code. No exceptions, even if explicitly requested.
+- **NO BRANCH CREATION** — Never create branches. The agent will already be on the appropriate branch when `/implement` is invoked. Do not run `git checkout -b`, `git branch`, or `git switch -c`. Work on the current branch.
+- **USE OBSIDIAN FOR PLANS** — Plans MUST be read using the Obsidian MCP tools (`obsidian_obsidian_get_file_contents`). Do NOT use `read` tool on the local filesystem to load plans.
 
 If you discover related work that should be done:
 1. Note it as a follow-up item
@@ -30,9 +34,21 @@ If you discover related work that should be done:
      > "This ticket has no acceptance criteria. Run `/story <ticket-id>` or `/epic <ticket-id>` to refine before implementing."
    - Do not proceed.
 
-3. **Load the implementation plan** from Obsidian: `working/plans/$ARGUMENTS-plan.md`
-   - If no plan exists, inform the user:
-     > "No implementation plan found. Run `/analyze $ARGUMENTS` first."
+3. **Load the implementation plan** from Obsidian using the Obsidian MCP tools.
+
+   **Required tool:** `obsidian_obsidian_get_file_contents`
+   **Path:** `working/plans/$ARGUMENTS-plan.md`
+
+   ```
+   obsidian_obsidian_get_file_contents(
+     filepath: "working/plans/$ARGUMENTS-plan.md"
+   )
+   ```
+
+   ⚠️ **DO NOT use the `read` tool** — that reads from the local filesystem, not Obsidian.
+
+   - If no plan exists in Obsidian, inform the user:
+     > "No implementation plan found in Obsidian. Run `/analyze $ARGUMENTS` first."
    - Do not proceed.
 
 4. **GUARD: Epic Scope Check**
@@ -128,6 +144,8 @@ Plan → Work → Verify → Commit → Update Tickets → Proceed
 - Ensure no regressions
 
 #### 4. Commit
+- **GATE:** Only proceed to commit if all verification steps in the previous step passed with zero errors.
+- **MANDATORY:** Git hooks must run. Never use `--no-verify`.
 - Invoke `/commit` to stage and commit the phase work
 - Include ticket ID(s) in commit message for traceability
 
@@ -224,7 +242,7 @@ Now implement ticket: **$ARGUMENTS**
 
 Start by:
 1. Fetching the ticket details
-2. Loading the plan from `working/plans/$ARGUMENTS-plan.md`
+2. Loading the plan from Obsidian via `obsidian_obsidian_get_file_contents`
 3. Marking the ticket as in-progress
 4. Beginning Phase 1
 

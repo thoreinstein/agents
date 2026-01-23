@@ -30,6 +30,9 @@ Execute complete feature implementations using a structured, phased approach wit
 - **TICKET TRACKING IS MANDATORY** — Update ticket status (in-progress/done) as you work.
 - **EPIC CLOSURE RULES** — Never close an epic while child tickets remain open.
 - **COMMIT BEFORE CLOSE** — A ticket status can only be changed to 'done' AFTER the code changes for that ticket have been successfully committed.
+- **VERIFY BEFORE COMMIT** — No code shall be committed until all verification steps (tests, lint, build, etc.) have passed successfully. If any check fails, you MUST resolve the issues and re-verify before attempting to commit.
+- **NO --NO-VERIFY** — Never, under any circumstances, use the `--no-verify` flag with git commit. Pre-commit hooks must always run and pass. If they fail, fix the code. No exceptions, even if explicitly requested.
+- **NO BRANCH CREATION** — Never create branches. The agent will already be on the appropriate branch when `/implement` is invoked. Do not run `git checkout -b`, `git branch`, or `git switch -c`. Work on the current branch.
 
 ### Scope Creep Self-Check
 
@@ -197,7 +200,8 @@ Phase 6: Documentation & Cleanup
 - **Scope is the plan**: Only implement what `/analyze` planned
 - **Atomic commits per phase**: Each phase MUST end with a commit
 - **No skipping phases**: Follow the sequence even for small features
-- **Verification gates**: Do not proceed until verification passes
+- **Verification gates**: Do not commit code or proceed to the next phase until all verification checks pass.
+- **No --no-verify**: Never bypass git hooks. If hooks fail, the code is not ready to be committed.
 - **Track everything**: Update ticket status in real-time, not at the end
 - **Clean completion**: No uncommitted changes, all tickets closed
 - **No premature closure**: Epic stays open until all children are done
