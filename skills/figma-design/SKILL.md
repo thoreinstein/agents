@@ -4,13 +4,7 @@ version: 1.0.0
 description: >-
   Interact with Figma design files via the web browser using the Figma Plugin API.
   Can create shapes, modify properties, extract information from design files.
-
-triggers:
-  - figma
-  - design file
-  - figma plugin
-
-tools:
+allowed-tools:
   chrome-devtools_navigate_page: true
   chrome-devtools_evaluate_script: true
   chrome-devtools_take_snapshot: true
