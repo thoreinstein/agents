@@ -10,6 +10,7 @@ tools:
   write: false
   edit: false
   bash: false
+  "github_*": false
 ---
 
 Principal Engineer with 20+ years experience across distributed systems,

@@ -70,6 +70,7 @@ tools:
   write: false
   edit: false
   bash: false
+  "github_*": false
   obsidian_obsidian_append_content: true
   obsidian_obsidian_get_file_contents: true
   obsidian_obsidian_simple_search: true
