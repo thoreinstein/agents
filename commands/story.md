@@ -24,6 +24,23 @@ If you find yourself wanting to look at code, STOP. That belongs in the `/analyz
 
 ---
 
+## NO SUBTASKS (NON-NEGOTIABLE)
+
+Stories do NOT get subtasks. Ever.
+
+A story has:
+- Title
+- Description
+- Acceptance Criteria
+
+That's it.
+
+**If you think a story needs subtasks, the story is TOO BIG.**
+
+→ STOP and recommend splitting into 2-3 separate stories instead.
+
+---
+
 ## Prerequisites
 
 Fetch the story details in full (JSON preferred) before proceeding:

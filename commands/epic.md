@@ -24,6 +24,27 @@ If you find yourself wanting to look at code, STOP. Return to the epic descripti
 
 ---
 
+## EPIC SIZE (NON-NEGOTIABLE)
+
+**Sweet spot: 3-5 child stories per epic.**
+
+- Fewer than 3? Probably not an epic, just a story.
+- More than 5? Epic is too big. Split into multiple epics.
+
+Do NOT create 10, 15, 27 tickets under one epic. That's scope explosion.
+
+## --parent IS MANDATORY (NON-NEGOTIABLE)
+
+Every child story MUST be created with:
+
+```bash
+bd add --parent <epic-id> "Story title"
+```
+
+No exceptions. No "I'll link them later." Use `--parent` at creation time.
+
+---
+
 ## Prerequisites
 
 Fetch the epic details in full (JSON preferred) before proceeding:
