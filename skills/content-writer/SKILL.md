@@ -43,6 +43,7 @@ A collaborative writing assistant that helps you create high-quality content thr
 ### Step 1: Understand the Vision
 
 Before writing, clarify:
+
 - What's the core message or thesis?
 - Who is the target audience?
 - What action should readers take?
@@ -52,6 +53,7 @@ Before writing, clarify:
 ### Step 2: Collaborative Outline
 
 Create a structured outline together:
+
 - Start with main sections
 - Add key points under each
 - Identify where research/citations are needed
@@ -61,6 +63,7 @@ Create a structured outline together:
 ### Step 3: Research & Citations
 
 For research-heavy content:
+
 - Identify claims that need supporting evidence
 - Search for credible sources (academic, industry, primary)
 - Summarize key findings with proper attribution
@@ -69,6 +72,7 @@ For research-heavy content:
 ### Step 4: Draft Section by Section
 
 Work through the outline:
+
 - Write one section at a time
 - Get feedback before moving on
 - Maintain consistent voice throughout
@@ -77,6 +81,7 @@ Work through the outline:
 ### Step 5: Hook Development
 
 For openings and key transitions:
+
 - Draft multiple hook options
 - Test against audience expectations
 - Choose the most compelling approach
@@ -85,6 +90,7 @@ For openings and key transitions:
 ### Step 6: Feedback Integration
 
 After each section or full draft:
+
 - Review for clarity and flow
 - Check argument strength
 - Verify citations are accurate
@@ -93,6 +99,7 @@ After each section or full draft:
 ### Step 7: Voice Check
 
 Ensure authenticity:
+
 - Compare against existing writing samples
 - Flag anything that sounds "off"
 - Preserve unique phrases and patterns
@@ -101,6 +108,7 @@ Ensure authenticity:
 ### Step 8: Final Polish
 
 Before publishing:
+
 - Read through completely
 - Check all links and citations
 - Verify formatting
@@ -125,18 +133,21 @@ content/
 ## Best Practices
 
 ### Research
+
 - Prefer primary sources over summaries
 - Verify claims with multiple sources
 - Note publication dates for timeliness
 - Save source URLs for citation
 
 ### Feedback
+
 - Be specific about what's not working
 - Offer concrete alternatives
 - Explain the "why" behind suggestions
 - Respect the author's voice
 
 ### Voice Preservation
+
 - Study existing writing samples first
 - Mirror sentence structure patterns
 - Preserve favorite phrases
@@ -145,6 +156,7 @@ content/
 ## Writing Workflows
 
 See `references/writing-workflows.md` for detailed templates:
+
 - Blog Post Workflow
 - Newsletter Workflow
 - Technical Tutorial Workflow
@@ -153,6 +165,7 @@ See `references/writing-workflows.md` for detailed templates:
 ## Examples
 
 See `references/examples.md` for detailed examples:
+
 - Teresa Torres-style collaborative workflow
 - Research-heavy article with citations
 - Hook improvement session
