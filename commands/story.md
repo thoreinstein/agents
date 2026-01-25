@@ -59,7 +59,7 @@ Analyze the story through these lenses to identify what's missing from requireme
 
 ## 3. Propose Child Tasks
 
-Break the story into discrete, deliverable tasks. Each task should be:
+Break the story into discrete, deliverable tasks if needed. Each task should be:
 - **Outcome-focused** — Describes the result, not the implementation
 - **Independently verifiable** — Has clear criteria for "done"
 - **Small enough** — Can be analyzed and implemented in a single `/analyze` + `/implement` cycle
@@ -78,7 +78,7 @@ Break the story into discrete, deliverable tasks. Each task should be:
 
 **For projects using beads:**
 ```bash
-bd add "<task title>" --parent=$ARGUMENTS
+bd create "<task title>" --parent=$ARGUMENTS
 ```
 **MANDATORY for beads projects:** Every child task MUST include `--parent=$ARGUMENTS` to establish the hierarchy.
 
