@@ -106,7 +106,9 @@ Fetch the epic details in full (JSON preferred) before proceeding:
 
 *Only proceed here after the user explicitly approves the stories.*
 
-1. Create the stories in the tracking system.
+1. **Update the Epic** with the refined Title, Description, and Acceptance Criteria.
+   - **Beads:** `bd update {{argument}} --title "<refined title>" --description "<refined description>" --acceptance "<refined AC>"`
+2. **Create the stories** in the tracking system.
    - **Beads:** `bd create "<story title>" --parent={{argument}}`
    - **Others:** Create as sub-issues.
-2. Confirm completion.
+3. Confirm completion.

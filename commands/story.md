@@ -97,10 +97,12 @@ Fetch the story details in full (JSON preferred) before proceeding:
 
 *Only proceed here after the user explicitly approves the plan.*
 
-1. **IF Breaking Down:**
+1. **Update the Story** with the refined Description and Acceptance Criteria.
+   - **Beads:** `bd update {{argument}} --description "<refined description>" --acceptance "<refined AC>"`
+2. **IF Breaking Down:**
    - Create the child tasks in the tracking system.
    - **Beads:** `bd create "<task title>" --parent={{argument}}`
    - **Others:** Create as sub-issues.
-2. **IF Keeping Single:**
+3. **IF Keeping Single:**
    - Confirm the story is "Ready for Dev".
-3. Confirm completion.
+4. Confirm completion.
